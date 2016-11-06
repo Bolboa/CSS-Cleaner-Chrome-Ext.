@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "description": "Get pages source from a popup",
   "browser_action": {
-    "default_popup": "http://localhost:8080/src/index.html"
+    "default_popup": "src/index.html"
   },
   "permissions": ["tabs", "<all_urls>"]
 }
