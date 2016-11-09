@@ -3,11 +3,16 @@ import React from 'react';
 export default class Layout extends React.Component {
 	constructor(){
 		super();
+		this.state = {
+			sourceCode:'',
+			sourceCSS:''
+		}
+
 	}
+	
 
 
 	componentWillMount(){
-		console.log("hello");
 		var result = '';
 	    chrome.tabs.executeScript(null, {
 	        file: 'src/js/scripts/getPageSource.js'
@@ -22,18 +27,25 @@ export default class Layout extends React.Component {
 	}
 
 	componentDidMount() {
+		var source = "";
 		chrome.runtime.onMessage.addListener(function(request, sender) {
   			if (request.action == "getSource") {
-    			console.log(request.source);
+    			this.setState({sourceCode: request.source});
   			}
-		});
-
+		}.bind(this));
+		
 	}
+	handleCssChange(event) {
+		this.setState({sourceCSS: event.target.value});
+	}
+
 
 	render() {
 		return (
 			<div>
-				<h1>Helloworld</h1>
+				<textarea rows="4" cols="50" onChange={this.handleCssChange.bind(this)}></textarea>
+				<button>Check</button>
+				<div>{this.state.sourceCode}</div>
 			</div>
 		)
 	}
