@@ -14,7 +14,7 @@ function DOMtoString(document_root) {
 
     }
     var html = {class:classes, id:elIds};
-    console.log(html);
+    //console.log(html);
     return html;
 }
 

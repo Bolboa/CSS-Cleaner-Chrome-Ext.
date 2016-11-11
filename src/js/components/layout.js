@@ -1,6 +1,8 @@
 import React from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
-export default class Layout extends React.Component {
+class Layout extends React.Component {
 	constructor(){
 		super();
 		this.state = {
@@ -29,10 +31,12 @@ export default class Layout extends React.Component {
 	componentDidMount() {
 		var source = "";
 		chrome.runtime.onMessage.addListener(function(request, sender) {
+			console.log("here");
   			if (request.action == "getSource") {
-    			this.setState({sourceCode: request.source});
+  				console.log(request.source);
+    			//this.setState({sourceCode: request.source});
   			}
-		}.bind(this));
+		});
 		
 	}
 	handleCssChange(event) {
@@ -50,3 +54,11 @@ export default class Layout extends React.Component {
 		)
 	}
 }
+
+function mapStateToProps(state) {
+	return {
+		users: state.users
+	};
+}
+
+export default connect(mapStateToProps)(Layout);
