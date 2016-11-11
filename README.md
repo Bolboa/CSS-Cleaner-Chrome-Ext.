@@ -1,5 +1,7 @@
-#In Progress--
+##In Progress--
 
-##CSS-Cleaner-Chrome-Ext.-
+#CSS-Cleaner-Chrome-Ext.-
 
-#Technologies 
+##Technologies
+*React-Redux
+*Chrome API
