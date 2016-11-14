@@ -1,6 +1,7 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {getSource} from '../actions/index';
 
 class Layout extends React.Component {
 	constructor(){
@@ -33,12 +34,20 @@ class Layout extends React.Component {
 		chrome.runtime.onMessage.addListener(function(request, sender) {
 			console.log("here");
   			if (request.action == "getSource") {
-  				console.log(request.source);
-    			//this.setState({sourceCode: request.source});
+  				//console.log(request.source);
+  				this.props.getSource(request.source);
   			}
-		});
+		}.bind(this));
 		
 	}
+
+	checkCSS(){
+		console.log(this.props.source);
+
+	}
+
+
+	//get CSS code from user
 	handleCssChange(event) {
 		this.setState({sourceCSS: event.target.value});
 	}
@@ -48,7 +57,7 @@ class Layout extends React.Component {
 		return (
 			<div>
 				<textarea rows="4" cols="50" onChange={this.handleCssChange.bind(this)}></textarea>
-				<button>Check</button>
+				<button onClick={this.checkCSS.bind(this)}>click me</button>
 				<div>{this.state.sourceCode}</div>
 			</div>
 		)
@@ -57,8 +66,12 @@ class Layout extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		users: state.users
+		source: state.source
 	};
 }
 
-export default connect(mapStateToProps)(Layout);
+function matchDispatchToProps(dispatch) {
+	return bindActionCreators({getSource:getSource}, dispatch);
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(Layout);
