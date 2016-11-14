@@ -13,8 +13,17 @@ function DOMtoString(document_root) {
         }
 
     }
-    var html = {class:classes, id:elIds};
     
+    //Get list of stylesheets being used on page
+    var stylesheet = document_root.styleSheets[(document_root.styleSheets.length - 1)];
+    var styleList = [];
+    for( var i in document_root.styleSheets ){
+        stylesheet = document_root.styleSheets[i].href;
+        styleList.push(stylesheet);
+    }
+
+    var html = {class:classes, id:elIds, styles:styleList};
+
     return html;
 }
 

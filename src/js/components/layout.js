@@ -1,7 +1,7 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getSource} from '../actions/index';
+import {getSource, getStyle} from '../actions/index';
 
 class Layout extends React.Component {
 	constructor(){
@@ -27,6 +27,7 @@ class Layout extends React.Component {
 	            console.log(result);
 	        }
 	    });
+
 	}
 
 	componentDidMount() {
@@ -34,8 +35,8 @@ class Layout extends React.Component {
 		chrome.runtime.onMessage.addListener(function(request, sender) {
 			console.log("here");
   			if (request.action == "getSource") {
-  				//console.log(request.source);
   				this.props.getSource(request.source);
+  				this.props.getStyle(request.source);
   			}
 		}.bind(this));
 		
@@ -43,7 +44,7 @@ class Layout extends React.Component {
 
 	checkCSS(){
 		console.log(this.props.source);
-
+		console.log(this.props.css);
 	}
 
 
@@ -66,12 +67,13 @@ class Layout extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		source: state.source
+		source: state.source,
+		css:state.css
 	};
 }
 
 function matchDispatchToProps(dispatch) {
-	return bindActionCreators({getSource:getSource}, dispatch);
+	return bindActionCreators({getSource:getSource, getStyle:getStyle}, dispatch);
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Layout);

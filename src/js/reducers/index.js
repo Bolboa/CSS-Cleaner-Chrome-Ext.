@@ -1,10 +1,11 @@
 import {combineReducers} from 'redux';
 
-import states from './reducer-states';
-import SourceCode from './reducer-listener';
+import SourceCode from './reducer-source-listener';
+import CSSSource  from './reducer-css-listener';
 
 const allReducers = combineReducers({
-	source: SourceCode
+	source: SourceCode,
+	css:CSSSource
 });
 
 export default allReducers;
