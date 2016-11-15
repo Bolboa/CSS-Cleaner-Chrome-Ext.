@@ -18,7 +18,20 @@ const getStyle = (CSS) => {
 	}
 }
 
+const cssSelect = (select) => {
+	var stylesheets = [];
+	for (var i=0; i<CSS.styles.length; i++) {
+		stylesheets.push(CSS.styles[i]);
+	}
+	console.log("recieved", stylesheets);
+	return {
+		type: "CSS_RECEIVED",
+		payload: stylesheets
+	}
+}
+
 export {
 	getSource,
-	getStyle
+	getStyle,
+	cssSelect
 }

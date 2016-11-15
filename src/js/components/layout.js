@@ -1,14 +1,13 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getSource, getStyle} from '../actions/index';
+import {getSource, getStyle, cssSelect} from '../actions/index';
 
 class Layout extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			sourceCode:'',
-			sourceCSS:''
+			sourceCode:''
 		}
 
 	}
@@ -20,7 +19,6 @@ class Layout extends React.Component {
 	    chrome.tabs.executeScript(null, {
 	        file: 'src/js/scripts/getPageSource.js'
 	     }, function() {
-	     	console.log("batcch");
 	        // If you try and inject into an extensions page or the webstore/NTP you'll get an error
 	        if (chrome.runtime.lastError) {
 	            result = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
@@ -33,7 +31,6 @@ class Layout extends React.Component {
 	componentDidMount() {
 		var source = "";
 		chrome.runtime.onMessage.addListener(function(request, sender) {
-			console.log("here");
   			if (request.action == "getSource") {
   				this.props.getSource(request.source);
   				this.props.getStyle(request.source);
@@ -42,24 +39,37 @@ class Layout extends React.Component {
 		
 	}
 
-	checkCSS(){
+	checkCSS(style){
 		console.log(this.props.source);
 		console.log(this.props.css);
+		console.log(style);
 	}
 
+	saveCSS(style) {
+		
 
-	//get CSS code from user
-	handleCssChange(event) {
-		this.setState({sourceCSS: event.target.value});
+		this.props.cssSelect(style);
 	}
+
+	
 
 
 	render() {
+		if (!this.props.css) {
+            return null;
+        }
+       
 		return (
 			<div>
-				<textarea rows="4" cols="50" onChange={this.handleCssChange.bind(this)}></textarea>
+				
 				<button onClick={this.checkCSS.bind(this)}>click me</button>
-				<div>{this.state.sourceCode}</div>
+				<div className="cssList">
+				{
+					this.props.css.map(function(style){
+						return (<a onClick={this.saveCSS.bind(this,style)} key={style}>{style}</a>)
+					}.bind(this))
+				}
+				</div>
 			</div>
 		)
 	}
@@ -68,12 +78,13 @@ class Layout extends React.Component {
 function mapStateToProps(state) {
 	return {
 		source: state.source,
-		css:state.css
+		css:state.css,
+		curr_css:state.curr_css
 	};
 }
 
 function matchDispatchToProps(dispatch) {
-	return bindActionCreators({getSource:getSource, getStyle:getStyle}, dispatch);
+	return bindActionCreators({getSource:getSource, getStyle:getStyle, cssSelect:cssSelect}, dispatch);
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Layout);
