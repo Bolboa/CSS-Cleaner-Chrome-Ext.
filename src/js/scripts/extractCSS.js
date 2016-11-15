@@ -14,7 +14,7 @@ function CSStoString(document_root) {
     }
     
     //Get list of stylesheets source code
-    
+    console.log(document_root.styleSheets);
     return document_root.styleSheets;
 }
 
