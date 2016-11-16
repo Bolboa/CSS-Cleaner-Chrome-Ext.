@@ -18,6 +18,11 @@ function CSStoString(document_root) {
     return document_root.styleSheets;
 }
 
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    console.log(message);
+});
+
+
 chrome.runtime.sendMessage({
     action: "getSourceCSS",
     source: CSStoString(document)

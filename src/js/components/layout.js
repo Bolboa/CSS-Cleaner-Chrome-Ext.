@@ -46,15 +46,17 @@ class Layout extends React.Component {
 	}
 
 	saveCSS(style) {
-		chrome.tabs.executeScript(null, {
-	        file: 'src/js/scripts/extractCSS.js'
-	     }, function() {
-	        // If you try and inject into an extensions page or the webstore/NTP you'll get an error
-	        if (chrome.runtime.lastError) {
-	            result = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
-	            console.log(result);
-	        }
-	    });
+		chrome.tabs.query(
+    		{ currentWindow: true, active: true },
+    		function (tabArray) {
+    			console.log(tabArray[0].id);
+        		chrome.tabs.executeScript(tabArray[0].id, {
+            		file: 'src/js/scripts/extractCSS.js'
+         		}, function() {
+            		chrome.tabs.sendMessage(tabArray[0].id, [this.props.source, style]);
+
+        		}.bind(this))
+    		}.bind(this));
 	}
 
 	
