@@ -1,29 +1,23 @@
-function CSStoString(document_root) {
-
-    var classes = [],
-        elIds = [],
-        all = document_root.getElementsByTagName("*");
-    for (var i=0, max=all.length; i < max; i++) {
-        if (all[i].className) {
-            classes.push(all[i]);
-        }
-        if (all[i].id) {
-            elIds.push(all[i]);
-        }
-
-    }
+function CSStoString(document_root, message) {
     
-    //Get list of stylesheets source code
-    console.log(document_root.styleSheets);
-    return document_root.styleSheets;
+    //Get selected CSS from list of CSS stylesheets
+    sSheetList = document_root.styleSheets;
+    for (var i=0; i<sSheetList.length; i++) {
+        if (sSheetList[i].href == message[1]){
+            selectedCSS = sSheetList[i];
+        }
+    }
+
+    console.log(selectedCSS);
+    return selectedCSS;
 }
 
+
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    console.log(message);
+    chrome.runtime.sendMessage({
+        action: "getSourceCSS",
+        source: CSStoString(document, message)
+    });
 });
 
 
-chrome.runtime.sendMessage({
-    action: "getSourceCSS",
-    source: CSStoString(document)
-});

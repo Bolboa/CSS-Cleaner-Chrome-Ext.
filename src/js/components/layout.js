@@ -12,8 +12,6 @@ class Layout extends React.Component {
 
 	}
 	
-
-
 	componentWillMount(){
 		var result = '';
 	    chrome.tabs.executeScript(null, {
@@ -60,8 +58,6 @@ class Layout extends React.Component {
 	}
 
 	
-
-
 	render() {
 		if (!this.props.css) {
             return null;
