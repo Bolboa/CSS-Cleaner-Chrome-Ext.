@@ -24,7 +24,7 @@ function DOMtoString(document_root) {
         
     }
 
-    var html = {class:classes, id:elIds, styles:styleList};
+    var html = {styles:styleList};
 
     return html;
 }

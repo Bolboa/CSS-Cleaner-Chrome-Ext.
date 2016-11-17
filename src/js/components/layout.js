@@ -37,12 +37,6 @@ class Layout extends React.Component {
 		
 	}
 
-	checkCSS(style){
-		console.log(this.props.source);
-		console.log(this.props.css);
-		console.log(style);
-	}
-
 	saveCSS(style) {
 		chrome.tabs.query(
     		{ currentWindow: true, active: true },
@@ -51,7 +45,7 @@ class Layout extends React.Component {
         		chrome.tabs.executeScript(tabArray[0].id, {
             		file: 'src/js/scripts/extractCSS.js'
          		}, function() {
-            		chrome.tabs.sendMessage(tabArray[0].id, [this.props.source, style]);
+            		chrome.tabs.sendMessage(tabArray[0].id, style);
 
         		}.bind(this))
     		}.bind(this));
@@ -66,7 +60,7 @@ class Layout extends React.Component {
 		return (
 			<div>
 				
-				<button onClick={this.checkCSS.bind(this)}>click me</button>
+				
 				<div className="cssList">
 				{
 					this.props.css.map(function(style){
