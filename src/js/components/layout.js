@@ -7,7 +7,8 @@ class Layout extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			sourceCode:''
+			sourceCode:'',
+			tabs:''
 		}
 
 	}
@@ -38,6 +39,7 @@ class Layout extends React.Component {
 	}
 
 	saveCSS(style) {
+		//this.setState({style:style});
 		chrome.tabs.query(
     		{ currentWindow: true, active: true },
     		function (tabArray) {
@@ -45,6 +47,7 @@ class Layout extends React.Component {
         		chrome.tabs.executeScript(tabArray[0].id, {
             		file: 'src/js/scripts/extractCSS.js'
          		}, function() {
+         			console.log(this.state.style);
             		chrome.tabs.sendMessage(tabArray[0].id, style);
 
         		}.bind(this))
