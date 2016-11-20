@@ -54,33 +54,74 @@ function cleanCSS(stylesheet, sourceCode) {
         selectedSource.push(styleSheetClass);
     }
    
-    //Maps all CSS that should be kept in the stylesheet
+    var mapping = mapCSS(selectedSource, originalSource, originalSourceId);
+    
+    printMappedCSS(stylesheet, mapping);
+
+    
+}
+
+//Function to print out only CSS that is mapped
+function printMappedCSS(stylesheet, mapping) {
+    for (var i=0; i<stylesheet.cssRules.length; i++) {
+        if (mapping[i] == 1) {
+            console.log(stylesheet.cssRules[i].cssText);
+        }
+    }
+
+}
+
+
+//Function to map all CSS that should be kept in the stylesheet
+function mapCSS(selectedSource, originalSource, originalSourceId) {
     var mapping = [];
     for (var i=0; i<selectedSource.length; i++) {
+        var check = false;
         if (selectedSource[i] != undefined) {
             if(selectedSource[i].startsWith('.')) {
                 for(var j=0; j<originalSource.length; j++) {
                     
                     if (selectedSource[i].indexOf(originalSource[j]) !== -1 && originalSource[j]) {
-                        console.log("org" + selectedSource[i]);
-                        console.log("sans"+originalSource[j]);
-                        mapping.push(1);
+                        //console.log("org" + selectedSource[i]);
+                        //console.log("sans"+originalSource[j]);
+                        check = true;
                         break;
                     }
+                    
                 }
+              
             }
             else if (selectedSource[i].startsWith('#')) {
                 console.log("id");
+                for(var j=0; j<originalSourceId.length; j++) {
+                    
+                    if (selectedSource[i].indexOf(originalSourceId[j]) !== -1 && originalSourceId[j]) {
+                        //console.log("org" + selectedSource[i]);
+                        //console.log("sans"+originalSourceId[j]);
+                        check = true;
+                        break;
+                    }
+                    
+                }
+               
             }
             else {
+                check = true;
                 console.log("none");
+                
+            }
+            if (check == true) {
+                mapping.push(1);
+            }
+            else if (check == false) {
+                mapping.push(0);
             }
         }
-        
+        else {
+            mapping.push(1);
+        }
     }
-    console.log(mapping);
-
-    
+    return mapping;
 }
 
 //Function to get html source code and divide it into Ids and Classes
