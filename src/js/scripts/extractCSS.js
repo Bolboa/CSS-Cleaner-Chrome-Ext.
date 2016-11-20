@@ -1,7 +1,7 @@
 function CSStoString(document_root, message) {
     
     //Get selected CSS from list of CSS stylesheets
-   sSheetList = document_root.styleSheets;
+    sSheetList = document_root.styleSheets;
     for (var i=0; i<sSheetList.length; i++) {
         if (sSheetList[i].href == message){
             selectedCSS = sSheetList[i];
@@ -13,7 +13,6 @@ function CSStoString(document_root, message) {
 }
 
 function cleanCSS(stylesheet, sourceCode) {
-
     //Get arry of all classes used in the html of the current tab
     var originalSource = [];
     for (var i=0; i<sourceCode.classes.length; i++) {
@@ -44,8 +43,6 @@ function cleanCSS(stylesheet, sourceCode) {
                
         }
     }
-    console.log("class", originalSource);
-    console.log("id", originalSourceId);
 
     //Isolate all CSS identifiers being used in selected stylesheet
     var selectedSource =  [];
@@ -56,20 +53,44 @@ function cleanCSS(stylesheet, sourceCode) {
    
     var mapping = mapCSS(selectedSource, originalSource, originalSourceId);
     
-    printMappedCSS(stylesheet, mapping);
+    var newCSS = stringMappedCSS(stylesheet, mapping);
+
+    var fileName = stylesheet.href.substring(stylesheet.href.lastIndexOf("/") + 1);
+    var data = newCSS;
+    saveData(data, fileName);
+
 
     
 }
 
-//Function to print out only CSS that is mapped
-function printMappedCSS(stylesheet, mapping) {
+//Function to get string of CSS that is mapped
+function stringMappedCSS(stylesheet, mapping) {
+    var newCSS = '';
     for (var i=0; i<stylesheet.cssRules.length; i++) {
         if (mapping[i] == 1) {
-            console.log(stylesheet.cssRules[i].cssText);
+            newCSS += stylesheet.cssRules[i].cssText;
         }
     }
+    return newCSS;
+    
 
 }
+
+//Function to save cleaned CSS file to browser
+var saveData = (function () {
+    var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    return function (data, fileName) {
+        var blob = new Blob([data], {type: "octet/stream"}),
+            url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+}());
+
 
 
 //Function to map all CSS that should be kept in the stylesheet
@@ -80,10 +101,7 @@ function mapCSS(selectedSource, originalSource, originalSourceId) {
         if (selectedSource[i] != undefined) {
             if(selectedSource[i].startsWith('.')) {
                 for(var j=0; j<originalSource.length; j++) {
-                    
                     if (selectedSource[i].indexOf(originalSource[j]) !== -1 && originalSource[j]) {
-                        //console.log("org" + selectedSource[i]);
-                        //console.log("sans"+originalSource[j]);
                         check = true;
                         break;
                     }
@@ -92,12 +110,9 @@ function mapCSS(selectedSource, originalSource, originalSourceId) {
               
             }
             else if (selectedSource[i].startsWith('#')) {
-                console.log("id");
                 for(var j=0; j<originalSourceId.length; j++) {
                     
                     if (selectedSource[i].indexOf(originalSourceId[j]) !== -1 && originalSourceId[j]) {
-                        //console.log("org" + selectedSource[i]);
-                        //console.log("sans"+originalSourceId[j]);
                         check = true;
                         break;
                     }
@@ -107,8 +122,6 @@ function mapCSS(selectedSource, originalSource, originalSourceId) {
             }
             else {
                 check = true;
-                console.log("none");
-                
             }
             if (check == true) {
                 mapping.push(1);
