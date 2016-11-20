@@ -15,7 +15,7 @@ function CSStoString(document_root, message) {
 function cleanCSS(stylesheet, sourceCode) {
 
     //Get arry of all classes used in the html of the current tab
-    var orginalSource = [];
+    var originalSource = [];
     for (var i=0; i<sourceCode.classes.length; i++) {
         var attribute = sourceCode.classes[i].className;
 
@@ -23,41 +23,67 @@ function cleanCSS(stylesheet, sourceCode) {
             attribute = attribute.split(" ");
             for (var j=0; j<attribute.length; j++) {
                 //console.log(attribute[j]);
-                if(!orginalSource.includes(attribute[j])) {
-                    orginalSource.push(attribute[j]);
+                if(!originalSource.includes(attribute[j])) {
+                    originalSource.push(attribute[j]);
                 }
             }
                
         }  
     }
     //Get arry of all IDs used in the html of the current tab
-    var orginalSourceId = [];
+    var originalSourceId = [];
     for (var i=0; i<sourceCode.ids.length; i++) {
         var attributeId = sourceCode.ids[i].id;
         if (typeof attributeId === 'string' || attributeId instanceof String) {
             attributeId = attributeId.split(" ");
             for (var j=0; j<attributeId.length; j++) {
-                if(!orginalSourceId.includes(attributeId[j])) {
-                    orginalSourceId.push(attributeId[j]);
+                if(!originalSourceId.includes(attributeId[j])) {
+                    originalSourceId.push(attributeId[j]);
                 }
             }
                
         }
     }
-    console.log("class", orginalSource);
-    console.log("id", orginalSourceId);
+    console.log("class", originalSource);
+    console.log("id", originalSourceId);
 
+    //Isolate all CSS identifiers being used in selected stylesheet
     var selectedSource =  [];
     for (var i=0; i<stylesheet.cssRules.length; i++) {
         styleSheetClass = stylesheet.cssRules[i].selectorText;
         selectedSource.push(styleSheetClass);
     }
-    console.log(selectedSource);
+   
+    //Maps all CSS that should be kept in the stylesheet
+    var mapping = [];
+    for (var i=0; i<selectedSource.length; i++) {
+        if (selectedSource[i] != undefined) {
+            if(selectedSource[i].startsWith('.')) {
+                for(var j=0; j<originalSource.length; j++) {
+                    
+                    if (selectedSource[i].indexOf(originalSource[j]) !== -1 && originalSource[j]) {
+                        console.log("org" + selectedSource[i]);
+                        console.log("sans"+originalSource[j]);
+                        mapping.push(1);
+                        break;
+                    }
+                }
+            }
+            else if (selectedSource[i].startsWith('#')) {
+                console.log("id");
+            }
+            else {
+                console.log("none");
+            }
+        }
+        
+    }
+    console.log(mapping);
 
     
 }
 
-//get html source code and divided it into Ids and Classes
+//Function to get html source code and divide it into Ids and Classes
 function getSourceHTML(document_root) {
     var classes = [],
         elIds = [],

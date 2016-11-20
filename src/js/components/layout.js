@@ -1,13 +1,12 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getSource, getStyle, cssSelect} from '../actions/index';
+import {getStyle, cssSelect} from '../actions/index';
 
 class Layout extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			sourceCode:'',
 			tabs:''
 		}
 
@@ -31,7 +30,6 @@ class Layout extends React.Component {
 		var source = "";
 		chrome.runtime.onMessage.addListener(function(request, sender) {
   			if (request.action == "getSource") {
-  				this.props.getSource(request.source);
   				this.props.getStyle(request.source);
   			}
 		}.bind(this));
@@ -39,7 +37,6 @@ class Layout extends React.Component {
 	}
 
 	saveCSS(style) {
-		//this.setState({style:style});
 		chrome.tabs.query(
     		{ currentWindow: true, active: true },
     		function (tabArray) {
@@ -78,14 +75,13 @@ class Layout extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		source: state.source,
 		css:state.css,
 		curr_css:state.curr_css
 	};
 }
 
 function matchDispatchToProps(dispatch) {
-	return bindActionCreators({getSource:getSource, getStyle:getStyle, cssSelect:cssSelect}, dispatch);
+	return bindActionCreators({getStyle:getStyle, cssSelect:cssSelect}, dispatch);
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Layout);

@@ -1,11 +1,3 @@
-const getSource = (html) => {
-	console.log("recieved", html);
-	return {
-		type: "SOURCE_RECEIVED",
-		payload: html
-	}
-}
-
 const getStyle = (CSS) => {
 	var stylesheets = [];
 	for (var i=0; i<CSS.styles.length; i++) {
@@ -27,7 +19,6 @@ const cssSelect = (select) => {
 }
 
 export {
-	getSource,
 	getStyle,
 	cssSelect
 }
