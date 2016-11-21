@@ -45,3 +45,47 @@ h1 {
     font-weight: 700;
     font-family: "Open", sans-serif;
 }
+
+input[type="radio"] + span {
+  background-color: #fefefe;
+  border: 1px solid;
+  border-color: #ccc #fff #fff #ccc;
+  border-radius: 50px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  float: left;
+  margin-right: 7px;
+  padding: 7px;
+  position: relative;
+  -webkit-appearance: none;
+}
+input[type="radio"]:checked + span {
+  color: #f00;
+}
+
+input[type="radio"]:checked + span:after {
+  background: #3291b0;
+  border-radius: 50px;
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.75), inset -1px -1px 1px rgba(0, 0, 0, 0.75);
+  content: " ";
+  height: 10px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  width: 10px;
+}
+
+.inputWrap:hover input[type="radio"] + span {
+  border-color: #3291b0;
+}
+input[type="radio"], input[type="checkbox"] {
+    margin: 4px 0 0;
+    line-height: normal;
+    opacity: 1;
+    z-index: 9999;
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    height: 20px;
+    cursor: pointer;
+}

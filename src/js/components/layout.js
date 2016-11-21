@@ -57,9 +57,6 @@ class Layout extends React.Component {
 		this.setState({selectedStyle: style});
 	}
 
-	check() {
-		console.log(this.state.selectedStyle);
-	}
 	
 	render() {
 		if (!this.props.css) {
@@ -75,7 +72,7 @@ class Layout extends React.Component {
 				{
 					this.props.css.map(function(style){
 						if (style) {
-							return (<div className="inputWrap"><input type="radio" name="style_name" onClick={this.selectedCSS.bind(this, style)}/><a key={style}>{style}</a></div>)
+							return (<div className="inputWrap"><input type="radio" name="style_name" onClick={this.selectedCSS.bind(this, style)}/><span></span><a key={style}>{style}</a></div>)
 						}
 					}.bind(this))
 				}
