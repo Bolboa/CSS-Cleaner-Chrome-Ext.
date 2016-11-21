@@ -1,0 +1,47 @@
+body {
+	border-top:solid 3px #3291b0;
+	width:800px;
+}
+h1 {
+	text-align: center;
+    font-size: 2em;
+    font-family: "Open", sans-serif;
+    font-weight: normal;
+}
+.inputWrap {
+	float: left;
+    clear: left;
+    margin-bottom: 8px;
+}
+.cssList {
+	width: 100%;
+    float: left;
+    padding-left: 45px;
+    margin-bottom: 10px;
+}
+.cssList a {
+	color: #717171;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	margin-left: 5px;
+}
+.cleanBtn {
+	margin: 10px auto 20px;
+    display: block;
+    background: #3291b0;
+    border: 1px solid #3291b0;
+    color: #fff;
+    width: 90%;
+    font-size: 1.5em;
+    padding: 3px;
+    font-family: "Open", sans-serif;
+    border-radius: 3px;
+}
+
+h1 {
+	color: #525252;
+    text-align: left;
+    font-size: 1.25em;
+    font-weight: 700;
+    font-family: "Open", sans-serif;
+}

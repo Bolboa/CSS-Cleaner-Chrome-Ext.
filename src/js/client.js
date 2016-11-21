@@ -7,6 +7,8 @@ import allReducers from './reducers';
 
 import Layout from "./components/Layout";
 
+require('./styles.css');
+
 const store = createStore(allReducers);
 
 const app = document.getElementById('app');

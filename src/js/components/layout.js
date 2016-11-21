@@ -7,7 +7,8 @@ class Layout extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			tabs:''
+			tabs:'',
+			selectedStyle:''
 		}
 
 	}
@@ -36,7 +37,8 @@ class Layout extends React.Component {
 		
 	}
 
-	saveCSS(style) {
+	saveCSS() {
+		var style = this.state.selectedStyle;
 		chrome.tabs.query(
     		{ currentWindow: true, active: true },
     		function (tabArray) {
@@ -51,6 +53,13 @@ class Layout extends React.Component {
     		}.bind(this));
 	}
 
+	selectedCSS(style) {
+		this.setState({selectedStyle: style});
+	}
+
+	check() {
+		console.log(this.state.selectedStyle);
+	}
 	
 	render() {
 		if (!this.props.css) {
@@ -62,12 +71,17 @@ class Layout extends React.Component {
 				
 				
 				<div className="cssList">
+				<h1>Select the stylesheet you wish to clean</h1>
 				{
 					this.props.css.map(function(style){
-						return (<a onClick={this.saveCSS.bind(this,style)} key={style}>{style}</a>)
+						if (style) {
+							return (<div className="inputWrap"><input type="radio" name="style_name" onClick={this.selectedCSS.bind(this, style)}/><a key={style}>{style}</a></div>)
+						}
 					}.bind(this))
 				}
+				
 				</div>
+				<button className="cleanBtn" onClick={this.saveCSS.bind(this)}>Clean!</button>
 			</div>
 		)
 	}
