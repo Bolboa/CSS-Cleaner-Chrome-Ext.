@@ -8,8 +8,8 @@ function CSStoString(document_root, message) {
         }
     }
     var html = getSourceHTML(document_root);
-    cleanCSS(selectedCSS, html);
-    return selectedCSS;
+    var bool = cleanCSS(selectedCSS, html);
+    return bool;
 }
 
 function cleanCSS(stylesheet, sourceCode) {
@@ -45,19 +45,29 @@ function cleanCSS(stylesheet, sourceCode) {
     }
 
     //Isolate all CSS identifiers being used in selected stylesheet
-    var selectedSource =  [];
-    for (var i=0; i<stylesheet.cssRules.length; i++) {
-        styleSheetClass = stylesheet.cssRules[i].selectorText;
-        selectedSource.push(styleSheetClass);
-    }
-   
-    var mapping = mapCSS(selectedSource, originalSource, originalSourceId);
     
-    var newCSS = stringMappedCSS(stylesheet, mapping);
+    if (stylesheet.cssRules == null) {
+        return false;
+    }
+    else {
+        var selectedSource =  [];
+        for (var i=0; i<stylesheet.cssRules.length; i++) {
+            styleSheetClass = stylesheet.cssRules[i].selectorText;
+            selectedSource.push(styleSheetClass);
+        }
+       
+        var mapping = mapCSS(selectedSource, originalSource, originalSourceId);
+        
+        var newCSS = stringMappedCSS(stylesheet, mapping);
 
-    var fileName = stylesheet.href.substring(stylesheet.href.lastIndexOf("/") + 1);
-    var data = newCSS;
-    saveData(data, fileName);
+        var fileName = stylesheet.href.substring(stylesheet.href.lastIndexOf("/") + 1);
+        var data = newCSS;
+        saveData(data, fileName);
+
+    }
+
+    return true;
+    
 
 
     
@@ -156,7 +166,6 @@ function getSourceHTML(document_root) {
 
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    console.log(message);
     chrome.runtime.sendMessage({
         action: "getSourceCSS",
         source: CSStoString(document, message)

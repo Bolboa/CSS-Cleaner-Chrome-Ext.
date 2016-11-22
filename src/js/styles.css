@@ -21,9 +21,11 @@ h1 {
 }
 .cssList a {
 	color: #717171;
-	text-decoration: none;
-	text-overflow: ellipsis;
-	margin-left: 5px;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    margin-left: 5px;
+    float: left;
+    max-width: 700px;
 }
 .cleanBtn {
 	margin: 10px auto 20px;
@@ -80,6 +82,7 @@ input[type="radio"]:checked + span:after {
 }
 input[type="radio"], input[type="checkbox"] {
     margin: 4px 0 0;
+    margin-left: -25px;
     line-height: normal;
     opacity: 1;
     z-index: 9999;

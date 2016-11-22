@@ -2,6 +2,7 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getStyle, cssSelect} from '../actions/index';
+import Main from './subComponents/main';
 
 class Layout extends React.Component {
 	constructor(){
@@ -33,7 +34,11 @@ class Layout extends React.Component {
   			if (request.action == "getSource") {
   				this.props.getStyle(request.source);
   			}
+  			else if (request.action == "getSourceCSS") {
+  				console.log(request.source);
+  			}
 		}.bind(this));
+
 		
 	}
 
@@ -46,7 +51,7 @@ class Layout extends React.Component {
         		chrome.tabs.executeScript(tabArray[0].id, {
             		file: 'src/js/scripts/extractCSS.js'
          		}, function() {
-         			console.log(this.state.style);
+         			console.log(style);
             		chrome.tabs.sendMessage(tabArray[0].id, style);
 
         		}.bind(this))
@@ -54,7 +59,8 @@ class Layout extends React.Component {
 	}
 
 	selectedCSS(style) {
-		this.setState({selectedStyle: style});
+		console.log("yes");
+		//this.setState({selectedStyle: style});
 	}
 
 	
@@ -66,19 +72,8 @@ class Layout extends React.Component {
 		return (
 			<div>
 				
+				<Main css={this.props.css} select={this.selectedCSS.bind(this)} save={this.saveCSS.bind(this)} />
 				
-				<div className="cssList">
-				<h1>Select the stylesheet you wish to clean</h1>
-				{
-					this.props.css.map(function(style){
-						if (style) {
-							return (<div className="inputWrap"><input type="radio" name="style_name" onClick={this.selectedCSS.bind(this, style)}/><span></span><a key={style}>{style}</a></div>)
-						}
-					}.bind(this))
-				}
-				
-				</div>
-				<button className="cleanBtn" onClick={this.saveCSS.bind(this)}>Clean!</button>
 			</div>
 		)
 	}
