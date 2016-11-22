@@ -1,13 +1,23 @@
-body {
-	border-top:solid 3px #3291b0;
-	width:800px;
+.default {
+  border-top:solid 3px #3291b0;
+  width:800px;
 }
-h1 {
-	text-align: center;
-    font-size: 2em;
-    font-family: "Open", sans-serif;
-    font-weight: normal;
+.success {
+    background: #3291b0;
+    width: 100%;
+    float: left;
+    height: 100%;
+    width: 800px;
+    min-height: 200px;
 }
+
+.success h1 {
+  text-align: center;
+  color:white;
+  font-size: 2em;
+}
+
+
 .inputWrap {
 	float: left;
     clear: left;
