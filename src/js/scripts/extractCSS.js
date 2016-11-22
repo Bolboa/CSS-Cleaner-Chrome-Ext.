@@ -21,7 +21,6 @@ function cleanCSS(stylesheet, sourceCode) {
         if (typeof attribute === 'string' || attribute instanceof String) {
             attribute = attribute.split(" ");
             for (var j=0; j<attribute.length; j++) {
-                //console.log(attribute[j]);
                 if(!originalSource.includes(attribute[j])) {
                     originalSource.push(attribute[j]);
                 }

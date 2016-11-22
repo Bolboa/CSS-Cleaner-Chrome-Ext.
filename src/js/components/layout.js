@@ -3,13 +3,16 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getStyle, cssSelect} from '../actions/index';
 import Main from './subComponents/main';
+import Success from './subComponents/success';
+import Fail from './subComponents/fail';
 
 class Layout extends React.Component {
 	constructor(){
 		super();
 		this.state = {
 			tabs:'',
-			selectedStyle:''
+			selectedStyle:'',
+			success:'default'
 		}
 
 	}
@@ -35,6 +38,7 @@ class Layout extends React.Component {
   				this.props.getStyle(request.source);
   			}
   			else if (request.action == "getSourceCSS") {
+  				this.setState({success:request.source});
   				console.log(request.source);
   			}
 		}.bind(this));
@@ -47,11 +51,9 @@ class Layout extends React.Component {
 		chrome.tabs.query(
     		{ currentWindow: true, active: true },
     		function (tabArray) {
-    			console.log(tabArray[0].id);
         		chrome.tabs.executeScript(tabArray[0].id, {
             		file: 'src/js/scripts/extractCSS.js'
          		}, function() {
-         			console.log(style);
             		chrome.tabs.sendMessage(tabArray[0].id, style);
 
         		}.bind(this))
@@ -59,8 +61,7 @@ class Layout extends React.Component {
 	}
 
 	selectedCSS(style) {
-		console.log("yes");
-		//this.setState({selectedStyle: style});
+		this.setState({selectedStyle: style});
 	}
 
 	
@@ -70,10 +71,10 @@ class Layout extends React.Component {
         }
        
 		return (
-			<div>
-				
-				<Main css={this.props.css} select={this.selectedCSS.bind(this)} save={this.saveCSS.bind(this)} />
-				
+			<div>	
+				{this.state.success == 'default' && <Main css={this.props.css} select={this.selectedCSS.bind(this)} save={this.saveCSS.bind(this)} />}
+				{this.state.success == true && <Success />}
+				{this.state.success == false && <Fail />}
 			</div>
 		)
 	}
