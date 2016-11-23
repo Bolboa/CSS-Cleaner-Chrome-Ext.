@@ -7,7 +7,7 @@ Extension to clean any unused CSS from any CSS file being used in the current ta
 * When the Chrome Extension is launched, code will be injected into the DOM to retrieve all stylesheets being used. The user must then select the stylesheet he wishes to clean. When the clean button is pressed, the Chrome App will compare the CSS to the DOM and remove most of the unnecessary CSS from the stylesheet.
 ![Alt text](/gifs/step2.gif)
 
-* Next, a cleaned version of the selected CSS file is downloaded to the browser bearing the same name as the original.
+* Next, a cleaned version of the selected CSS file is downloaded to the browser bearing the same name as the original.  
 ![Alt text](/gifs/step3.gif)
 
 ##Technologies
