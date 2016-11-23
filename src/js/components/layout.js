@@ -12,7 +12,8 @@ class Layout extends React.Component {
 		this.state = {
 			tabs:'',
 			selectedStyle:'',
-			success:'default'
+			success:'default',
+			percentage:''
 		}
 
 	}
@@ -38,7 +39,8 @@ class Layout extends React.Component {
   				this.props.getStyle(request.source);
   			}
   			else if (request.action == "getSourceCSS") {
-  				this.setState({success:request.source});
+  				this.setState({success:request.source[0]});
+  				this.setState({percentage:request.source[1]});
   				console.log(request.source);
   			}
 		}.bind(this));
@@ -73,7 +75,7 @@ class Layout extends React.Component {
 		return (
 			<div>	
 				{this.state.success == 'default' && <Main css={this.props.css} select={this.selectedCSS.bind(this)} save={this.saveCSS.bind(this)} />}
-				{this.state.success == true && <Success />}
+				{this.state.success == true && <Success removedStat={this.state.percentage} />}
 				{this.state.success == false && <Fail />}
 			</div>
 		)

@@ -44,9 +44,9 @@ function cleanCSS(stylesheet, sourceCode) {
     }
 
     //Isolate all CSS identifiers being used in selected stylesheet
-    
+    var percentage = 0;
     if (stylesheet.cssRules == null) {
-        return false;
+        return [false, percentage];
     }
     else {
         var selectedSource =  [];
@@ -57,30 +57,35 @@ function cleanCSS(stylesheet, sourceCode) {
        
         var mapping = mapCSS(selectedSource, originalSource, originalSourceId);
         
-        var newCSS = stringMappedCSS(stylesheet, mapping);
-
+        var CSSData = stringMappedCSS(stylesheet, mapping);
+        var newCSS = CSSData[0];
+        percentage = CSSData[1];
         var fileName = stylesheet.href.substring(stylesheet.href.lastIndexOf("/") + 1);
         var data = newCSS;
         saveData(data, fileName);
 
     }
 
-    return true;
-    
-
-
-    
+    return [true, percentage];   
 }
 
 //Function to get string of CSS that is mapped
 function stringMappedCSS(stylesheet, mapping) {
     var newCSS = '';
+    var before = mapping.length;
+    var after = 0;
     for (var i=0; i<stylesheet.cssRules.length; i++) {
         if (mapping[i] == 1) {
             newCSS += stylesheet.cssRules[i].cssText;
+            after += 1;
         }
     }
-    return newCSS;
+
+    //Calculate how much CSS was removed
+    var percentage = 100 - ((after/before)*100);
+    percentage = Math.round(percentage*100)/100;
+    
+    return [newCSS, percentage];
     
 
 }

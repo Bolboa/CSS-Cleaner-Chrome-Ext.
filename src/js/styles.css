@@ -2,21 +2,120 @@
   border-top:solid 3px #3291b0;
   width:800px;
 }
+
+.default .fa {
+  float: right;
+  margin-top: -340px;
+  font-size: 2em;
+  color:#3291b0;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: all .1s;
+}
+.default .fa:hover {
+  color:#3eadd2;
+  transform: scale(1.1);
+}
+
 .success {
-    background: #3291b0;
+    border: solid 4px #6bd780;
     width: 100%;
     float: left;
     height: 100%;
-    width: 800px;
-    min-height: 200px;
+    width: 600px;
+}
+
+.fail {
+  border: solid 4px #e77662;
+  width: 100%;
+  float: left;
+  height: 100%;
+  width: 600px;
+}
+.fail h1 {
+  color:#e77662;
+  font-size: 2em;
+  float:left;
+}
+
+.fail .text {
+  float: left;
+  margin-left: 20px;
+}
+
+.fail .fa {
+  float: left;
+  font-size: 3em;
+  color:#e77662;
+  margin-top: 25px;
+  margin-left: 30px;
+}
+.fail .fa-times-circle {
+  float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: 2em;
+  cursor: pointer;
+  transition: all .1s;
+}
+
+.fail .fa-times-circle:hover {
+  color:#ea664e;
+  transform: scale(1.1);
+}
+
+.fail .errMsg {
+  float:left;
+  clear:left;
+  color:#9e9e9e;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  font-family: 'Open',sans-serif;
+  font-weight: bold;
 }
 
 .success h1 {
-  text-align: center;
-  color:white;
+  color:#6bd780;
   font-size: 2em;
+  float:left;
 }
 
+.success .text {
+  float: left;
+  margin-left: 20px;
+}
+
+.success .fa {
+  float: left;
+  font-size: 3em;
+  color:#6bd780;
+  margin-top: 25px;
+  margin-left: 30px;
+}
+
+.success .fa-times-circle {
+  float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: 2em;
+  cursor: pointer;
+  transition: all .1s;
+}
+
+.success .fa-times-circle:hover {
+  color:#50e86e;
+  transform: scale(1.1);
+}
+
+.success .stat {
+  float:left;
+  clear:left;
+  color:#9e9e9e;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  font-family: 'Open',sans-serif;
+  font-weight: bold;
+}
 
 .inputWrap {
 	float: left;

@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 
 export default class Main extends Component{
+	constructor(){
+		super();
+	}
+
+	close() {
+		window.close();
+	}
 	render(){
         return(
         	<div className="default">
@@ -22,6 +29,7 @@ export default class Main extends Component{
 					
 					</div>
 					<button className="cleanBtn" onClick={this.props.save}>Clean!</button>
+					<i class="fa fa-times-circle" aria-hidden="true" onClick={this.close.bind(this)}></i>
 				</div>
         )
 

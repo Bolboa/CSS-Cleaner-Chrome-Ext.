@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
 
 export default class Fail extends Component{
+	constructor(){
+		super();
+	}
+
+	close() {
+		window.close();
+	}
 	render(){
         return(
         	<div className="fail">
-        		<h1>CSS cannot be found</h1>
+        		<i class="fa fa-times" aria-hidden="true"></i>
+        		<div className="text">
+	        		<h1>Error</h1>
+	        		<div className="errMsg">Stylesheet is unreachable!</div>
+	        	</div>
+	        	<i class="fa fa-times-circle" aria-hidden="true" onClick={this.close.bind(this)}></i>
 			</div>
         )
 
