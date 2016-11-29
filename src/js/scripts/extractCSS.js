@@ -52,6 +52,7 @@ function cleanCSS(stylesheet, sourceCode) {
         var selectedSource =  [];
         for (var i=0; i<stylesheet.cssRules.length; i++) {
             styleSheetClass = stylesheet.cssRules[i].selectorText;
+            console.log(stylesheet.cssRules[i]);
             selectedSource.push(styleSheetClass);
         }
        
