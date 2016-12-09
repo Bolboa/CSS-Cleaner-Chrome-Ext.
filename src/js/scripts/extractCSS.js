@@ -52,7 +52,6 @@ function cleanCSS(stylesheet, sourceCode) {
         var selectedSource =  [];
         for (var i=0; i<stylesheet.cssRules.length; i++) {
             styleSheetClass = stylesheet.cssRules[i].selectorText;
-            console.log(stylesheet.cssRules[i]);
             selectedSource.push(styleSheetClass);
         }
        
@@ -70,18 +69,28 @@ function cleanCSS(stylesheet, sourceCode) {
     return [true, percentage];   
 }
 
-//Function to get string of CSS that is mapped
+
+
+/*------------------GET STRING OF MAPPED CSS-------------*/
+
 function stringMappedCSS(stylesheet, mapping) {
+
     var newCSS = '';
+    var oldCSS = '';
+
     var before = mapping.length;
     var after = 0;
     for (var i=0; i<stylesheet.cssRules.length; i++) {
+        oldCSS += stylesheet.cssRules[i].cssText;
         if (mapping[i] == 1) {
             newCSS += stylesheet.cssRules[i].cssText;
             after += 1;
         }
+        else if (mapping[i] == 2) {
+            cleanMediaQuery(stylesheet.cssRules[i].cssText);
+        }
     }
-
+   
     //Calculate how much CSS was removed
     var percentage = 100 - ((after/before)*100);
     percentage = Math.round(percentage*100)/100;
@@ -91,7 +100,19 @@ function stringMappedCSS(stylesheet, mapping) {
 
 }
 
-//Function to save cleaned CSS file to browser
+/*-------------RETURN CLEAN VERSION OF MEDIA QUERY---------------------*/
+
+function cleanMediaQuery(mediaQuery) {
+    var trim_media = mediaQuery.replace(/(\r\n|\n|\r)/gm,"");
+    console.log(trim_media);
+    var identifiers = mediaQuery.match(/\.(.*)}/);
+    console.log(identifiers);
+
+}
+
+
+/*-------------SAVE CSS FILE TO BROWSER-------------*/
+
 var saveData = (function () {
     var a = document.createElement("a");
     document.body.appendChild(a);
@@ -108,11 +129,14 @@ var saveData = (function () {
 
 
 
-//Function to map all CSS that should be kept in the stylesheet
+
+/*---------------------MAP ALL CSS THAT SHOULD BE KEPT IN STYLESHEE------------------*/
+
 function mapCSS(selectedSource, originalSource, originalSourceId) {
     var mapping = [];
     for (var i=0; i<selectedSource.length; i++) {
         var check = false;
+        
         if (selectedSource[i] != undefined) {
             if(selectedSource[i].startsWith('.')) {
                 for(var j=0; j<originalSource.length; j++) {
@@ -146,13 +170,18 @@ function mapCSS(selectedSource, originalSource, originalSourceId) {
             }
         }
         else {
-            mapping.push(1);
+            mapping.push(2);
         }
     }
     return mapping;
 }
 
-//Function to get html source code and divide it into Ids and Classes
+
+
+
+
+/*--------------GET HTML SOURCE AND DIVIDE INTO IDS AND CLASSES------------*/
+
 function getSourceHTML(document_root) {
     var classes = [],
         elIds = [],
@@ -168,6 +197,8 @@ function getSourceHTML(document_root) {
     }
     return {classes:classes, ids:elIds}
 }
+
+
 
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
