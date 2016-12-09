@@ -13,7 +13,7 @@ function CSStoString(document_root, message) {
     //get all classes and ids from html source code
     var html = getSourceHTML(document_root);
     //initiates the cleaning process, gets a boolean value as response
-    //which indicated whether CSS is accessible or not
+    //which indicates whether CSS is accessible or not
     var bool = cleanCSS(selectedCSS, html);
 
     return bool;
