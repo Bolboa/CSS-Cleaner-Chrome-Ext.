@@ -77,17 +77,19 @@ function stringMappedCSS(stylesheet, mapping) {
 
     var newCSS = '';
     var oldCSS = '';
-
-    var before = mapping.length;
+    var mappingArray = mapping[0];
+    var htmlSource = mapping[1];
+    var htmlsourceId = mapping[2];
+    var before = mappingArray.length;
     var after = 0;
     for (var i=0; i<stylesheet.cssRules.length; i++) {
         oldCSS += stylesheet.cssRules[i].cssText;
-        if (mapping[i] == 1) {
+        if (mappingArray[i] == 1) {
             newCSS += stylesheet.cssRules[i].cssText;
             after += 1;
         }
-        else if (mapping[i] == 2) {
-            cleanMediaQuery(stylesheet.cssRules[i].cssText);
+        else if (mappingArray[i] == 2) {
+            cleanMediaQuery(stylesheet.cssRules[i].cssText, htmlSource, htmlsourceId);
         }
     }
    
@@ -102,11 +104,59 @@ function stringMappedCSS(stylesheet, mapping) {
 
 /*-------------RETURN CLEAN VERSION OF MEDIA QUERY---------------------*/
 
-function cleanMediaQuery(mediaQuery) {
-    var trim_media = mediaQuery.replace(/(\r\n|\n|\r)/gm,"");
-    //console.log(trim_media);
-    var identifiers = mediaQuery.match(/\.(.*)}/g);
-    console.log(identifiers);
+function cleanMediaQuery(mediaQuery, htmlsource, htmlsourceId) {
+
+    if (mediaQuery != null) {
+        var trim_media = mediaQuery.replace(/(\r\n|\n|\r)/gm,"");
+        var media_start = mediaQuery.match(/@media(.*?){/);
+        //console.log(media_start);
+        var identifiers = mediaQuery.match(/\.(.*?)}/g);
+        var id_identifiers = mediaQuery.match(/\#(.*?)}/g);
+        if (identifiers != null && media_start != null) {
+            for (var i=0; i<identifiers.length; i++) {
+
+                var class_identifier = identifiers[i].match(/\.(.*){/);
+
+                if (class_identifier != null) {
+                    class_identifier = class_identifier[1].trim();
+                    class_identifier = "." + class_identifier;
+                    for (var j=0; j<htmlsource.length; j++) {
+                        if (class_identifier.indexOf(htmlsource[j]) !== -1 && htmlsource[j]) {
+                            media_start += " ";
+                            media_start += identifiers[i];
+                            //console.log(identifiers[i]);
+                            break;
+                          
+                        }
+                      
+                    }
+                }
+               
+            }
+        }
+        if (id_identifiers != null && media_start != null) {
+            for (var i=0; i<id_identifiers.length; i++) {
+                var id_identifier = id_identifiers[i].match(/\#(.*){/);
+                if (id_identifier != null) {
+                    id_identifier = id_identifier[1].trim();
+                    id_identifier = "#" + id_identifier;
+                    //console.log(id_identifier);
+                    for (var j=0; j<htmlsourceId.length; j++) {
+                        if (id_identifier.indexOf(htmlsourceId[j]) !== -1 && htmlsourceId[j]) {
+                            media_start += " ";
+                            media_start += id_identifier[i];
+
+                            break;
+                          
+                        }
+                    }
+                }
+            }
+        
+        }
+        media_start += "}";
+        console.log(media_start);
+    }
 
 }
 
@@ -130,7 +180,7 @@ var saveData = (function () {
 
 
 
-/*---------------------MAP ALL CSS THAT SHOULD BE KEPT IN STYLESHEE------------------*/
+/*---------------------MAP ALL CSS THAT SHOULD BE KEPT IN STYLESHEET------------------*/
 
 function mapCSS(selectedSource, originalSource, originalSourceId) {
     var mapping = [];
@@ -173,7 +223,7 @@ function mapCSS(selectedSource, originalSource, originalSourceId) {
             mapping.push(2);
         }
     }
-    return mapping;
+    return [mapping, originalSource, originalSourceId];
 }
 
 
