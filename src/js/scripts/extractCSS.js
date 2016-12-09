@@ -104,8 +104,8 @@ function stringMappedCSS(stylesheet, mapping) {
 
 function cleanMediaQuery(mediaQuery) {
     var trim_media = mediaQuery.replace(/(\r\n|\n|\r)/gm,"");
-    console.log(trim_media);
-    var identifiers = mediaQuery.match(/\.(.*)}/);
+    //console.log(trim_media);
+    var identifiers = mediaQuery.match(/\.(.*)}/g);
     console.log(identifiers);
 
 }
