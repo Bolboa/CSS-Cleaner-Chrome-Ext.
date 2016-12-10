@@ -5,11 +5,15 @@ export default class Fail extends Component{
 		super();
 	}
 
+	/*----CLOSE EXTENSION----*/
 	close() {
 		window.close();
 	}
+
 	render(){
+
         return(
+
         	<div className="fail">
         		<i class="fa fa-times" aria-hidden="true"></i>
         		<div className="text">
@@ -18,6 +22,7 @@ export default class Fail extends Component{
 	        	</div>
 	        	<i class="fa fa-times-circle" aria-hidden="true" onClick={this.close.bind(this)}></i>
 			</div>
+			
         )
 
     }
