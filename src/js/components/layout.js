@@ -80,8 +80,8 @@ class Layout extends React.Component {
 
 		//if CSS store is empty
 		if (!this.props.css) {
-            return null;
-        }
+                    return null;
+                }
        	
 		return (
 
