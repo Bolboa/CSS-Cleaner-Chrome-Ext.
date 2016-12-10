@@ -12,6 +12,8 @@ Extension to clean any unused CSS from any CSS file being used in the current ta
 * Some stylsheets might be unattainable. This has to do largely with CORS issues. You may need to set some proper headers in order for the Chrome Extension to have access to them.
 ![Alt text](/gifs/step4.gif)
 
+##APIs
+Chrome API
+
 ##Technologies
 * React-Redux
-* Chrome API
