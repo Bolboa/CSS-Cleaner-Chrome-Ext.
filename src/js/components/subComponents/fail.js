@@ -12,7 +12,7 @@ export default class Fail extends Component{
 
 	render(){
 
-        return(
+        	return(
 
         	<div className="fail">
         		<i class="fa fa-times" aria-hidden="true"></i>
@@ -21,9 +21,7 @@ export default class Fail extends Component{
 	        		<div className="errMsg">Stylesheet is unreachable!</div>
 	        	</div>
 	        	<i class="fa fa-times-circle" aria-hidden="true" onClick={this.close.bind(this)}></i>
-			</div>
-			
-        )
-
-    }
+		</div>
+		)
+	}
 }
