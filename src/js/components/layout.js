@@ -19,9 +19,9 @@ class Layout extends React.Component {
 	
 	componentWillMount(){
 		
-		//result in case of error
-		var result = '';
-		//inject script to extract list of stylesheets being used in the tab
+	    //result in case of error
+	    var result = '';
+	    //inject script to extract list of stylesheets being used in the tab
 	    chrome.tabs.executeScript(null, {
 	        file: 'src/js/scripts/getPageSource.js'
 	     }, function() {
