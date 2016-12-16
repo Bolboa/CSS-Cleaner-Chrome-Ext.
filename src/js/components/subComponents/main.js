@@ -4,7 +4,8 @@ export default class Main extends Component{
 	constructor(){
 		super();
 	}
-
+	
+	/*----CLOSE EXTENSION----*/
 	close() {
 		window.close();
 	}
