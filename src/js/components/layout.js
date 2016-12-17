@@ -19,7 +19,6 @@ class Layout extends React.Component {
 	}
 	
 	componentWillMount(){
-		
 	    //result in case of error
 	    var result = '';
 	    //inject script to extract list of stylesheets being used in the tab
@@ -35,7 +34,6 @@ class Layout extends React.Component {
 	}
 
 	componentDidMount() {
-
 		//listens for a response concerning the cleaning of the stylesheet selected
 		chrome.runtime.onMessage.addListener(function(request, sender) {
 			//store the list of stylesheets in redux
@@ -54,7 +52,6 @@ class Layout extends React.Component {
 
 	/*----SENDS SELECTED STYLESHEET TO SCRIPT-----*/
 	saveCSS() {
-
 		//selected stylesheet
 		var style = this.state.selectedStyle;
 		//inject script in current window
@@ -78,14 +75,12 @@ class Layout extends React.Component {
 	}
 
 	render() {
-
 		//if CSS store is empty
 		if (!this.props.css) {
-                    return null;
-                }
+        	return null;
+       	}
        	
 		return (
-
 			<div>
 				{/*MAIN PAGE*/}
 				{this.state.success == 'default' && <Main css={this.props.css} select={this.selectedCSS.bind(this)} save={this.saveCSS.bind(this)} />}
@@ -94,7 +89,6 @@ class Layout extends React.Component {
 				{/*FAIL PAGE*/}
 				{this.state.success == false && <Fail />}
 			</div>
-
 		)
 	}
 }
