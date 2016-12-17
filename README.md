@@ -10,7 +10,7 @@ Extension to clean any unused CSS from any CSS file being used in the current ta
 ![Alt text](/gifs/step3.gif)
 
 * Some stylsheets might be unattainable. This has to do largely with CORS issues. You may need to set some proper headers in order for the Chrome Extension to have access to them.
-![Alt text](/gifs/error.png)
+![Alt text](/gifs/error.PNG)
 
 ##APIs
 * Chrome API
