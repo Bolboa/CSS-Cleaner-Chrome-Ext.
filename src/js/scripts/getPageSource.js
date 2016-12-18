@@ -2,7 +2,6 @@
 
 /*------------RETURNS ALL STYLESHEETS IN USE ON THE PAGE---------*/
 function listOfCSS(document_root) {
-
     //Get list of stylesheets being used on page
     var stylesheet = document_root.styleSheets[(document_root.styleSheets.length - 1)];
     var styleList = [];
