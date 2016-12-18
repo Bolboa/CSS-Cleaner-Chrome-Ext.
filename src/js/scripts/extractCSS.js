@@ -1,7 +1,6 @@
 
 /*----------INITIATE THE CLEANSE--------------*/
 function CSStoString(document_root, message) {   
-    
     //Get selected CSS from list of CSS stylesheets
     sSheetList = document_root.styleSheets;
     for (var i=0; i<sSheetList.length; i++) {
@@ -22,7 +21,6 @@ function CSStoString(document_root, message) {
 
 /*-----------ORGANIZING CSS --------------*/
 function cleanCSS(stylesheet, sourceCode) {
-
     //get array of all classes used in the html of the current tab
     var originalSource = [];
     for (var i=0; i<sourceCode.classes.length; i++) {
@@ -89,7 +87,6 @@ function cleanCSS(stylesheet, sourceCode) {
 
 /*------------------GET STRING OF MAPPED CSS-------------*/
 function stringMappedCSS(stylesheet, mapping) {
-
     //reserved for full cleaned version of CSS
     var newCSS = '';
     var oldCSS = '';
@@ -160,7 +157,6 @@ function stringMappedCSS(stylesheet, mapping) {
 
 /*-----------------RETURN KEYFRAMES BEING USED--------------------------*/
 function keyframeClean(animationCalls, keyframes) {
-
     //reserved for storing only necessary keyframes
     var keyframesToKeep = [];
     //loop through all animations used in the CSS
@@ -181,7 +177,6 @@ function keyframeClean(animationCalls, keyframes) {
 
 /*-------------RETURN CLEAN VERSION OF MEDIA QUERY---------------------*/
 function cleanMediaQuery(mediaQuery, htmlsource, htmlsourceId) {
-
     //the begining of the media query
     var media_start = mediaQuery.match(/@media(.*?){/);
     //this will be the content of the media query
@@ -279,7 +274,6 @@ var saveData = (function () {
 
 /*---------------------MAP ALL CSS THAT SHOULD BE KEPT IN STYLESHEET------------------*/
 function mapCSS(selectedSource, originalSource, originalSourceId) {
-
     var mapping = [];
     //loop through selected stylesheet
     for (var i=0; i<selectedSource.length; i++) {
