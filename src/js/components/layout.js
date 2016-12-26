@@ -93,6 +93,7 @@ class Layout extends React.Component {
 	}
 }
 
+/*--------BIND REDUX STATES TO COMPONENT------*/
 function mapStateToProps(state) {
 	return {
 		css:state.css,
@@ -100,6 +101,7 @@ function mapStateToProps(state) {
 	};
 }
 
+/*------BIND REDUX ACTIONS TO COMPONENT--------*/
 function matchDispatchToProps(dispatch) {
 	return bindActionCreators({getStyle:getStyle, cssSelect:cssSelect}, dispatch);
 }
