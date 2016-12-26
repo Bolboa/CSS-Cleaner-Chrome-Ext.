@@ -2,6 +2,7 @@
   "name": "Get pages source",
   "version": "1.0",
   "manifest_version": 2,
+  "homepage_url": "https://github.com/Bolboa/CSS-Cleaner-Chrome-Ext.",
   "description": "Get pages source from a popup",
   "browser_action": {
     "default_popup": "src/index.html"
